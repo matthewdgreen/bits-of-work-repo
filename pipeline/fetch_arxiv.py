@@ -6,7 +6,7 @@ arXiv asks for <= 1 request per 3 s; 503s are common and retried with backoff.
 """
 import sys, os, re, json, time, hashlib, urllib.request, urllib.parse, urllib.error
 import xml.etree.ElementTree as ET
-UA = {"User-Agent": "literature-search-pilot/0.2 (mailto:matthewdgreen@gmail.com)"}
+UA = {"User-Agent": "bits-of-work-symmetric-extension/0.1 (John Servil; mailto:johnservil@proton.me; https://github.com/johnservil)"}
 NS = {"a": "http://www.w3.org/2005/Atom", "arxiv": "http://arxiv.org/schemas/atom", "os": "http://a9.com/-/spec/opensearch/1.1/"}
 OUT = sys.argv[1]; os.makedirs(OUT, exist_ok=True)
 

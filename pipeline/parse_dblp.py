@@ -13,7 +13,7 @@ SRC = sys.argv[1]; OUT = sys.argv[2]
 src = open("pipeline/candidates.py").read().split("counts = collections.Counter()")[0]
 ns = {}; exec(src, ns); PC = ns["PC"]
 
-VENUES = re.compile(r"CRYPTO|EUROCRYPT|ASIACRYPT|PKC|TCC|CHES|PQCrypto|SAC|ANTS|J\. Cryptol|Des\. Codes Cryptogr|Math\. Comput|LMS J\. Comput\. Math|Adv\. Math\. Commun|IACR Trans|CT-RSA|INDOCRYPT|AFRICACRYPT|LATINCRYPT|ACNS|ESORICS|CCS|S&P|USENIX Security|IEEE Trans\. Inf\. Theory|ISIT|WCC|Finite Fields|J\. Number Theory|Math\. Cryptol|Cryptogr\. Commun", re.I)
+VENUES = re.compile(r"CRYPTO|FSE|EUROCRYPT|ASIACRYPT|PKC|TCC|CHES|PQCrypto|SAC|ANTS|J\. Cryptol|Des\. Codes Cryptogr|Math\. Comput|LMS J\. Comput\. Math|Adv\. Math\. Commun|IACR Trans|CT-RSA|INDOCRYPT|AFRICACRYPT|LATINCRYPT|ACNS|ESORICS|CCS|S&P|USENIX Security|IEEE Trans\. Inf\. Theory|ISIT|WCC|Finite Fields|J\. Number Theory|Math\. Cryptol|Cryptogr\. Commun", re.I)
 KINDS = {"article", "inproceedings", "incollection", "phdthesis", "book"}
 
 # DBLP needs its DTD for entities; use a parser with the DTD loaded.
@@ -39,7 +39,7 @@ class Target:
                 t = c["title"]
                 hits = {cls: [lab for rx, lab in pats if rx.search(t)] for cls, pats in PC.items()}
                 hits = {k: v for k, v in hits.items() if v}
-                if hits.get("ecdlp") == ["dlog generic"] and len(hits) == 1: hits = {}
+                if hits.get("ecdlp") == ["dlog generic"] and set(hits) <= {"ecdlp", "symmetric"}: del hits["ecdlp"]
                 venue_ok = bool(VENUES.search(c["venue"] or ""))
                 if hits or c["kind"] == "phdthesis" or venue_ok:
                     c["kw_hits"] = hits; c["venue_allow"] = venue_ok

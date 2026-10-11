@@ -1,8 +1,9 @@
-# Classification rubric (Phase 1, v0.3.4)
+# Classification rubric (Phase 1, v0.4)
 
 You are labeling cryptography papers for a bibliometric study of public
 cryptanalytic effort against the assumptions behind standardized public-key
-encryption. You see only title, authors, year, ePrint category and abstract.
+encryption, and (v0.4) against symmetric primitives. You see only title,
+authors, year, ePrint category and abstract.
 Judge what the paper DOES, not what it mentions.
 
 ## include
@@ -86,6 +87,28 @@ let downstream attribution split it.
                        abstract group-action problems with no isogeny content are out of
                        scope (no) or at most borderline.
 - `multivariate`       MQ/UOV/Rainbow/HFE/MinRank cryptanalysis.
+- `symmetric`          (v0.4) cryptanalysis of symmetric primitives: block ciphers,
+                       stream ciphers, hash functions and compression functions,
+                       MACs, permutations, AEAD primitives. Counts (include yes):
+                       full- or reduced-round attacks, distinguishers, collisions,
+                       preimages, related-key and key-recovery attacks (A, or C when
+                       they exploit special structure such as weak keys or invariant
+                       subspaces); generic attacks on primitives and on modes or
+                       constructions as such (time-memory trade-offs, birthday and
+                       multi-target attacks, generic hash-mode attacks) (A); quantum
+                       attacks and resource estimates, e.g. Grover, Simon (B); cost
+                       estimates and automated search for trails and attacks (A or D);
+                       record computations with stated resources (E); bounds ruling out
+                       a class of attacks, e.g. trail-probability bounds (F); withdrawn
+                       attacks (H). Security proofs for modes and constructions
+                       (indifferentiability, PRP/PRF bounds) are yes, G. Every
+                       primitive counts: standards, competition candidates, lightweight,
+                       arithmetization-oriented, classical, chaos-based and amateur
+                       designs. Stays include=no: side channels, faults,
+                       implementation; design papers, including their own security
+                       sections; attacks that depend on how an application or protocol
+                       uses a mode (padding oracles, protocol-level misuse). Hash
+                       functions built on public-key problems take their public-key tag.
 - `rsa_variant`        Coppersmith-style / small-exponent / partial-key attacks on
                        structured RSA (not generic factoring). Use instead of
                        `factoring` for these.
@@ -93,7 +116,7 @@ let downstream attribution split it.
                        Explicitly OUT of scope (include=no, tag other): permuted
                        kernel (PKP), code equivalence (LESS), lattice isomorphism
                        (HAWK/LIP), hidden subset sum, group-action/CSIDH-only
-                       problems, hash/symmetric cryptanalysis.
+                       problems.
 
 ## other fields
 
@@ -153,3 +176,22 @@ Do not skip items. Do not add commentary outside the JSON lines.
 - "A one-more discrete log assumption is hard in the generic group model"
   -> yes, F, {ecdlp:0.5, ffdlp:0.5}, layer 0.
 - "Factoring RSA-250" -> yes, E, {factoring:1}, is_record true.
+- (v0.4) "Finding collisions in the full SHA-1" -> yes, A, {symmetric:1},
+  layer 2, params [SHA-1].
+- (v0.4) "The first collision for full SHA-1" -> yes, E, {symmetric:1},
+  layer 2, params [SHA-1], is_record true.
+- (v0.4) "Improved differential-linear attacks on ChaCha" -> yes, A,
+  {symmetric:1}, layer 2, params [ChaCha20].
+- (v0.4) "MILP-based automatic search for differential trails" -> yes, A,
+  {symmetric:1}, layer 0.
+- (v0.4) "Quantum circuits for AES and the cost of Grover key search" -> yes,
+  B, {symmetric:1}, layer 2, params [AES-128], quantum true.
+- (v0.4) "Cryptanalysis of a chaos-based image encryption scheme" -> yes, A,
+  {symmetric:1}, layer 1.
+- (v0.4) "On the indifferentiability of the sponge construction" -> yes, G,
+  {symmetric:1}, layer 0.
+- (v0.4) "Ascon: submission to the NIST lightweight competition" -> no, X
+  (design).
+- (v0.4) "Differential fault analysis of AES" -> no, X.
+- (v0.4) "Lucky Thirteen: breaking the TLS and DTLS record protocols" -> no, X
+  (protocol-level use of a mode).

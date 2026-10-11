@@ -19,6 +19,8 @@ scenarios. All results are provisional and mostly not yet human-validated.
   aggregate research-allocation series (`data/authors/fte_by_year.csv`) and AI-effort calibration data.
 - `records/`: computational records (one YAML file per record, with sources).
 - `paper/`, `output/pdf/`: the working white paper. `docs/`: the website.
+- `notes/symmetric_extension.md`: an extension adding a symmetric-cryptanalysis class, with every
+  change it makes to the study's code, data and method. Definitions: `notes/symmetric_preregistration.md`.
 
 ## What was removed from this public copy
 

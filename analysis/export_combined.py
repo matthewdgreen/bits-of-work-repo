@@ -2,20 +2,23 @@
 """Export the combined included set (Phase 0 ePrint + Phase 1) to
 data/export/combined_included.csv (yes + borderline), one row per item, with
 headline-class attribution (fractional weights) and provenance columns.
+Includes the symmetric extension's labels (pipeline/symmetric_labels.py).
 
 Version weights (data/dedup/version_weights.csv, pipeline/build_version_weights.py) are
 applied to the w_* class weights, so they are the weights the paper counts use: a preprint
 or duplicate record of a work already counted gets 0, a journal extension of a conference
 paper 1/3. The multiplier is in version_weight and the counted record in version_of.
 """
-import json, csv, os
+import json, csv, os, sys
+sys.path.insert(0, "pipeline")
+from symmetric_labels import join
 EXCL = set(json.load(open('data/manual_exclusions.json'))['items'])
 POL = json.load(open("pipeline/attribution.json")); FRAC = POL["fractional"]; CLASSES = POL["classes"]
 VW = {}
 if os.path.exists("data/dedup/version_weights.csv"):
     VW = {r["id"]: r for r in csv.DictReader(open("data/dedup/version_weights.csv"))}
 
-def rows():
+def study_rows():
     for l in open("data/labeled_final.jsonl"):
         r = json.loads(l); yield r["eprint_id"], "eprint", ["eprint"], r
     for l in open("data/phase1/labeled_final.jsonl"):
@@ -25,6 +28,14 @@ def rows():
     for l in open("data/phase1/round2/labeled_final.jsonl"):
         r = json.loads(l); s = r.get("sources", [])
         yield r["id"], ("eprint" if s == ["eprint"] else ("round2_tierB_sample" if r["id"] in tb else "round2_v2")), s, r
+
+def rows():
+    study = list(study_rows())
+    retagged, extra = join({rid: r for rid, _, _, r in study})
+    for rid, phase, srcs, r in study: yield rid, phase, srcs, retagged[rid]
+    for r in extra:
+        s = r.get("sources", [])
+        yield r["id"], ("eprint" if r["round"] == "eprint" else "symmetric_" + r["round"]), s, r
 
 os.makedirs("data/export", exist_ok=True)
 cols = ["id", "phase", "sources", "vetted", "year", "include", "category", "problem_tags", "layer", "params", "regime", "leakage",

@@ -18,6 +18,7 @@ Two streaming passes over the DBLP dump (data/raw/dblp/dblp.xml.gz):
 Usage: python3 -I pipeline/authors_dblp.py match|stats
 """
 import gzip, re, json, sys, os, collections, unicodedata, hashlib
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from xml.etree.ElementTree import XMLParser
 
 DUMP = "data/raw/dblp/dblp.xml.gz"
@@ -63,10 +64,13 @@ def target_items():
     """Included + borderline items (all rounds), minus manual exclusions."""
     excl = set(json.load(open("data/manual_exclusions.json"))["items"])
     files = ["data/labeled_final.jsonl", "data/phase1/labeled_final.jsonl", "data/phase1/round2/labeled_final.jsonl"]
+    study = {}
     for f in files:
         if not os.path.exists(f): continue
         for l in open(f):
-            r = json.loads(l)
+            r = json.loads(l); study[r.get("id") or r.get("eprint_id")] = r
+    from symmetric_labels import join  # the symmetric extension's labels (notes/symmetric_extension.md)
+    for r in list(study.values()) + join(study)[1]:
             rid = r.get("id") or r.get("eprint_id")
             if rid in excl or r["label"].get("include") not in ("yes", "borderline"): continue
             ids = set(r.get("all_ids") or []) | {rid}

@@ -1,0 +1,2 @@
+batch	model	attempt	prompt_tokens	completion_tokens	cost_usd
+batch_0000	anthropic/claude-sonnet-5.5	0	31093	7075	0.132936

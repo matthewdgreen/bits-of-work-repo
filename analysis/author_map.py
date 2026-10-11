@@ -28,7 +28,7 @@ from authors_dblp import pick, item_people, name_key, full_norm, strip_homonym, 
 POL = json.load(open("pipeline/attribution.json"))
 CLASSES = POL["classes"]; EFF = set(POL["effort_categories"])
 SHOW = CLASSES[:2] + ["Lattice_any"] + CLASSES[2:]
-SHORT = {"ECDLP": "ECDLP", "MLWE_structured": "MLWE", "Lattice_any": "Lat(any)", "LWE_plain": "LWE",
+SHORT = {"Symmetric": "Sym", "ECDLP": "ECDLP", "MLWE_structured": "MLWE", "Lattice_any": "Lat(any)", "LWE_plain": "LWE",
          "SD_code": "SD", "Factoring_FFDLP": "Fact/FFDLP", "Isogeny": "Isog", "Multivariate": "MQ"}
 PY_PRIOR = {"A": 1.5, "C": 1.5, "F": 1.5, "D": 1.0, "E": 6.0, "B": 1.5, "H": 0.75}  # PY per paper, midpoints of PLAN ranges
 NOW = 2026

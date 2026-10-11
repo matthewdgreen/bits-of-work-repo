@@ -1,0 +1,14 @@
+raw rows by source: {'dblp': 357687, 'openalex_doi': 39292, 'openalex_phrase': 15351, 'openalex_snowball': 37922, 'zbmath': 5091}
+merged items: 365815; keyword-screened: 10442; covered by ePrint candidates: 1603; NEW candidates: 8839
+new candidates by era: {'pre-2006': 1225, '2006-2016': 3437, '2017+': 4177}
+new candidates with abstract: 6247 / 8839
+new candidates by tier: {'A': 8839}; tier A with abstract: 6247
+new candidates by class: {'symmetric': 8839, 'ecdlp': 93, 'comparator': 76, 'code': 64, 'lattice': 68}
+core-venue items lacking abstract (enrich_dois.txt): 20671
+snowball seeds resolved: 1728; unresolved: 256
+screened items by source combination, per class:
+  symmetric: {'openalex': 3726, 'dblp': 1605, 'dblp|openalex|openalex': 1326, 'dblp|openalex': 1155, 'openalex|openalex': 1048, 'dblp|openalex|openalex|zbmath': 766, 'dblp|openalex|zbmath': 285, 'zbmath': 151, 'dblp|openalex|openalex|openalex': 126, 'openalex|zbmath': 125}
+  lattice: {'openalex': 38, 'dblp': 10, 'dblp|openalex': 8, 'openalex|openalex': 8, 'dblp|openalex|openalex': 4, 'zbmath': 4, 'dblp|openalex|openalex|zbmath': 3, 'openalex|zbmath': 3, 'dblp|openalex|zbmath': 2}
+  code: {'dblp|openalex': 19, 'openalex': 18, 'dblp': 7, 'dblp|openalex|openalex': 7, 'zbmath': 7, 'openalex|zbmath': 6, 'openalex|openalex': 5, 'dblp|openalex|zbmath': 3, 'dblp|zbmath': 2, 'dblp|openalex|openalex|zbmath': 1}
+  comparator: {'openalex': 30, 'dblp|openalex': 15, 'openalex|openalex': 13, 'dblp|openalex|openalex': 12, 'zbmath': 7, 'dblp': 6, 'openalex|zbmath': 6, 'dblp|openalex|zbmath': 2, 'dblp|openalex|openalex|zbmath': 1}
+  ecdlp: {'openalex': 34, 'dblp|openalex': 14, 'openalex|openalex': 12, 'zbmath': 11, 'openalex|zbmath': 9, 'dblp|openalex|openalex|zbmath': 8, 'dblp|openalex|openalex': 7, 'dblp': 5, 'dblp|openalex|zbmath': 4, 'openalex|openalex|zbmath': 2}

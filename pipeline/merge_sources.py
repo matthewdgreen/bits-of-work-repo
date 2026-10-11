@@ -13,19 +13,31 @@ other, keyword-screen the merged items, and write:
 
 Dedup keys: DOI (lowercased), then normalized title (alnum, lowercase, first 60
 chars). Year = earliest seen. Abstract = longest seen.
+
+Usage: merge_sources.py [CLASS]. Without CLASS: the study's public-key classes,
+ignoring symmetric hits, with the outputs above. CLASS=symmetric: symmetric
+candidates only; ePrint coverage and snowball seeds come from
+data/raw/symmetric/eprint_labeled_final.jsonl; outputs go to
+data/raw/symmetric/candidates_merged.jsonl, data/raw/openalex/seeds_symmetric*.jsonl
+and data/symmetric/coverage.txt.
 """
 import json, glob, re, sys, collections, os, csv
 def norm(t): return re.sub(r"[^a-z0-9]+", "", (t or "").lower())[:60]
 
 ep = {json.loads(l)["eprint_id"]: json.loads(l) for l in open("data/eprint.jsonl")}
-ep_cand = {json.loads(l)["eprint_id"] for l in open("data/labeled_final.jsonl")}
-if os.path.exists("data/candidates_eprint_supp.jsonl"):
+ONLY = sys.argv[1] if len(sys.argv) > 1 else None
+assert ONLY in (None, "symmetric"), f"unknown class {ONLY}"
+OUT_CAND, OUT_SEEDS, OUT_COV = (("data/raw/symmetric/candidates_merged.jsonl", "data/raw/openalex/seeds_symmetric", "data/symmetric/coverage.txt") if ONLY
+                                else ("data/candidates_phase1.jsonl", "data/raw/openalex/seeds", "analysis/phase1_coverage.txt"))
+EP_LABELS = "data/raw/symmetric/eprint_labeled_final.jsonl" if ONLY else "data/labeled_final.jsonl"
+ep_cand = {json.loads(l)["eprint_id"] for l in open(EP_LABELS)}
+if not ONLY and os.path.exists("data/candidates_eprint_supp.jsonl"):
     ep_cand |= {json.loads(l)["eprint_id"] for l in open("data/candidates_eprint_supp.jsonl")}
 ep_titles = {}
 for eid, r in ep.items(): ep_titles.setdefault(norm(r["title"]), eid)
 
 # core venues whose papers we enrich with abstracts even when the title alone does not hit
-CORE = re.compile(r"^(CRYPTO|EUROCRYPT|ASIACRYPT|PKC|Public Key Cryptography|TCC|CHES|PQCrypto|SAC|Selected Areas in Cryptography|ANTS|"
+CORE = re.compile(r"^(CRYPTO|FSE|Fast Software Encryption|EUROCRYPT|ASIACRYPT|PKC|Public Key Cryptography|TCC|CHES|PQCrypto|SAC|Selected Areas in Cryptography|ANTS|"
                   r"J\. Cryptol|Des\. Codes Cryptogr|Math\. Comput|LMS J\. Comput\. Math|Adv\. Math\. Commun|IACR Trans|IACR Commun|CT-RSA|"
                   r"INDOCRYPT|AFRICACRYPT|LATINCRYPT|ACISP|Math\. Cryptol|J\. Math\. Cryptol|Cryptogr\. Commun|WCC|IMACC|Algorithmic Number Theory)", re.I)
 
@@ -115,7 +127,10 @@ for k, r in items.items():
     text = (r["title"] or "") + " \n " + (r.get("abstract") or "")
     hits = {c: [lab for rx, lab in pats if rx.search(text)] for c, pats in PC.items()}
     hits = {c: v for c, v in hits.items() if v}
-    if hits.get("ecdlp") == ["dlog generic"] and len(hits) == 1: hits = {}
+    if hits.get("ecdlp") == ["dlog generic"] and set(hits) <= {"ecdlp", "symmetric"}: del hits["ecdlp"]
+    if ONLY:
+        if ONLY not in hits: continue
+    else: hits.pop("symmetric", None)
     if not hits: continue
     srcs = "|".join(sorted(s.split("_")[0] for s in r["sources"]))
     for c in hits: cov_cls[c][srcs] += 1
@@ -129,29 +144,32 @@ for k, r in items.items():
                 "excl_hints": sorted(set(m.group(0).lower() for m in EXCL.finditer(text))),
                 "tier": tier(hits, text + " " + (r.get("venue") or ""), r["sources"])})
 # ePrint items newly screened in by widened patterns (rubric v0.3 / candidates.py isogeny-wide) join the Phase 1 pool
-if os.path.exists("data/candidates_eprint_supp.jsonl"):
+if not ONLY and os.path.exists("data/candidates_eprint_supp.jsonl"):
     for r in jl("data/candidates_eprint_supp.jsonl"):
         r = dict(r); r["id"] = r.pop("eprint_id"); r["sources"] = ["eprint_supp"]; r["tier"] = "A"; r["venue"] = "IACR ePrint (" + (r.pop("category", "") or "") + ")"
         new.append(r); cov["eprint_supp"] += 1
 new.sort(key=lambda r: (r.get("year") or 0, r["title"]))
-with open("data/candidates_phase1.jsonl", "w") as f:
+with open(OUT_CAND, "w") as f:
     for r in new: f.write(json.dumps(r, ensure_ascii=False) + "\n")
 open("data/raw/dblp/enrich_dois.txt", "w").write("\n".join(sorted(enrich)) + "\n")
 
 # snowball seeds: ePrint include=yes items mapped to a DOI / OpenAlex id via title
 seeds = []; unresolved = []
 title_to_k = {norm(r["title"]): k for k, r in items.items()}
-for row in csv.DictReader(open("data/export/eprint_included.csv")):
-    if row["include"] != "yes": continue
+def ep_included():
+    if not ONLY: return [row for row in csv.DictReader(open("data/export/eprint_included.csv")) if row["include"] == "yes"]
+    rows = [json.loads(l) for l in open(EP_LABELS)]
+    return [{"eprint_id": r["eprint_id"], "title": r["title"]} for r in rows if r["label"]["include"] == "yes" and ONLY in r["label"]["problem_tags"]]
+for row in ep_included():
     k = title_to_k.get(norm(row["title"]))
     r = items.get(k) if k is not None else None
     if r and (r.get("doi") or r.get("openalex_id")):
         seeds.append({"seed_id": row["eprint_id"], "doi": r.get("doi", ""), "openalex_id": r.get("openalex_id", ""), "title": row["title"]})
     else: unresolved.append({"seed_id": row["eprint_id"], "title": row["title"]})
 os.makedirs("data/raw/openalex", exist_ok=True)
-with open("data/raw/openalex/seeds.jsonl", "w") as f:
+with open(OUT_SEEDS + ".jsonl", "w") as f:
     for s in seeds: f.write(json.dumps(s, ensure_ascii=False) + "\n")
-with open("data/raw/openalex/seeds_unresolved.jsonl", "w") as f:
+with open(OUT_SEEDS + "_unresolved.jsonl", "w") as f:
     for s in unresolved: f.write(json.dumps(s, ensure_ascii=False) + "\n")
 
 yb = collections.Counter(("pre-2006" if (r.get('year') or 0) < 2006 else "2006-2016" if (r.get('year') or 0) <= 2016 else "2017+") for r in new)
@@ -165,4 +183,4 @@ lines = [f"raw rows by source: {dict(src_counts)}",
          f"snowball seeds resolved: {len(seeds)}; unresolved: {len(unresolved)}",
          "screened items by source combination, per class:"]
 for c, cnt in cov_cls.items(): lines.append(f"  {c}: {dict(cnt.most_common(10))}")
-open("analysis/phase1_coverage.txt", "w").write("\n".join(lines) + "\n"); print("\n".join(lines))
+open(OUT_COV, "w").write("\n".join(lines) + "\n"); print("\n".join(lines))

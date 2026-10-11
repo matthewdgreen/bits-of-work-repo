@@ -1,6 +1,6 @@
-labeled rows: 16468 (ePrint 5106, Phase 1 11362)
+labeled rows: 22904 (ePrint 7149, Phase 1 15755)
 
-== ePrint only (Phase 0 + isogeny supplement): 1072 effort items (A-F,H); borderline counted: True
+== ePrint only (Phase 0 + isogeny supplement): 2912 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 125.2    157      299     13.6     61.4     50.2  A:72 B:22 C:27 D:14 E:6 F:15 H:1
 MLWE_structured       208.1    347      485      2.6     58.6    147.0  A:160 B:29 C:84 D:57 E:5 F:5 H:7
@@ -9,9 +9,10 @@ SD_code               141.9    166      283      0.0     29.3    112.6  A:69 B:1
 Factoring_FFDLP       192.4    221      358      9.0     97.3     86.1  A:97 B:15 C:61 D:13 E:18 F:16 H:1
 Isogeny                75.6     78      155      0.0      0.0     75.6  A:27 B:8 C:35 D:5 E:1 F:2
 Multivariate          105.9    116      170      8.0     29.7     68.2  A:38 C:60 D:15 F:2 H:1
+Symmetric            1837.0   1843     1740     94.0    744.2    998.8  A:1414 B:138 C:134 D:44 E:20 F:77 H:16
 ALL LATTICES          374.2    389      542      3.0     96.4    274.8
 
-== Phase 1 new items only: 2367 effort items (A-F,H); borderline counted: True
+== Phase 1 new items only: 6267 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 399.1    480      725     95.8    158.8    144.4  A:256 B:55 C:108 D:17 E:11 F:34 H:2
 MLWE_structured       364.2    595      902     39.1    104.8    220.3  A:348 B:59 C:97 D:80 E:6 F:7 H:1
@@ -20,9 +21,10 @@ SD_code               251.8    281      426     35.3     65.0    151.4  A:116 B:
 Factoring_FFDLP       798.5    882     1406    230.1    287.9    280.6  A:613 B:117 C:28 D:39 E:39 F:45 H:2
 Isogeny                36.4     42       96      0.0      2.7     33.7  A:15 B:13 C:10 D:4
 Multivariate           90.3     98      152      9.0     45.0     36.3  A:40 B:6 C:39 D:13
+Symmetric            3898.4   3907     4672    567.2   1679.9   1651.3  A:3142 B:225 C:213 D:107 E:25 F:187 H:8
 ALL LATTICES          606.4    631      965     61.9    164.0    380.4
 
-== COMBINED, all sources: 3439 effort items (A-F,H); borderline counted: True
+== COMBINED, all sources: 9179 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 524.3    637      935    109.4    220.2    194.6  A:328 B:77 C:135 D:31 E:17 F:49 H:3
 MLWE_structured       572.2    942     1228     41.7    163.3    367.2  A:508 B:88 C:181 D:137 E:11 F:12 H:8
@@ -31,9 +33,10 @@ SD_code               393.7    447      625     35.3     94.3    264.0  A:185 B:
 Factoring_FFDLP       990.9   1103     1662    239.1    385.1    366.7  A:710 B:132 C:89 D:52 E:57 F:61 H:3
 Isogeny               112.0    120      228      0.0      2.7    109.3  A:42 B:21 C:45 D:9 E:1 F:2
 Multivariate          196.2    214      272     17.0     74.7    104.5  A:78 B:6 C:99 D:28 F:2 H:1
+Symmetric            5735.4   5750     5583    661.2   2424.1   2650.1  A:4556 B:363 C:347 D:151 E:45 F:264 H:24
 ALL LATTICES          980.5   1020     1330     64.9    260.4    655.2
 
-== COMBINED, vetted (ePrint + DBLP-indexed): 2179 effort items (A-F,H); borderline counted: True
+== COMBINED, vetted (ePrint + DBLP-indexed): 6172 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 299.9    371      574     61.6    133.4    105.0  A:189 B:45 C:69 D:21 E:14 F:33 H:3
 MLWE_structured       397.9    666      877     27.7    109.5    260.7  A:359 B:58 C:135 D:95 E:7 F:8 H:7
@@ -42,9 +45,10 @@ SD_code               284.4    327      467     20.1     63.1    201.2  A:142 B:
 Factoring_FFDLP       460.0    528      757    107.7    194.9    157.5  A:321 B:37 C:71 D:28 E:37 F:34 H:1
 Isogeny                98.6    105      199      0.0      2.7     95.9  A:37 B:18 C:40 D:7 E:1 F:2
 Multivariate          158.1    171      224     12.0     57.4     88.7  A:64 B:2 C:82 D:20 F:2 H:1
+Symmetric            3989.0   3998     3534    453.2   1657.9   1877.9  A:3231 B:247 C:227 D:76 E:29 F:170 H:18
 ALL LATTICES          706.8    732      962     41.9    183.7    481.2
 
-== COMBINED, all sources, classifier confidence >= 0.6: 2608 effort items (A-F,H); borderline counted: True
+== COMBINED, all sources, classifier confidence >= 0.6: 7935 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 409.6    489      728     91.0    175.9    142.6  A:268 B:67 C:84 D:17 E:17 F:36 H:3
 MLWE_structured       445.8    756      966     32.2    116.3    297.4  A:444 B:78 C:111 D:97 E:11 F:10 H:8
@@ -53,9 +57,10 @@ SD_code               285.9    322      460     21.1     73.5    191.3  A:147 B:
 Factoring_FFDLP       704.1    785     1123    196.3    272.7    235.1  A:512 B:84 C:63 D:32 E:55 F:37 H:3
 Isogeny                76.9     78      158      0.0      1.0     75.9  A:26 B:16 C:28 D:5 E:1 F:2
 Multivariate          166.3    181      223     12.0     65.7     88.6  A:70 B:5 C:84 D:20 F:2
+Symmetric            5323.6   5330     5005    621.2   2259.7   2442.7  A:4357 B:340 C:264 D:115 E:43 F:190 H:21
 ALL LATTICES          791.2    814     1045     52.9    201.1    537.2
 
-== COMBINED, vetted, confidence >= 0.6 (most conservative): 1786 effort items (A-F,H); borderline counted: True
+== COMBINED, vetted, confidence >= 0.6 (most conservative): 5572 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 252.4    305      489     54.7    113.4     84.3  A:166 B:42 C:42 D:15 E:14 F:26 H:3
 MLWE_structured       336.1    573      742     23.2     87.8    225.1  A:334 B:52 C:91 D:78 E:7 F:7 H:7
@@ -64,9 +69,10 @@ SD_code               215.9    246      362     11.4     49.5    155.0  A:115 B:
 Factoring_FFDLP       376.5    429      601     95.7    161.5    119.3  A:263 B:31 C:55 D:19 E:37 F:24 H:1
 Isogeny                71.9     73      151      0.0      1.0     70.9  A:23 B:14 C:28 D:5 E:1 F:2
 Multivariate          138.2    148      187      9.0     51.4     77.8  A:56 B:2 C:71 D:17 F:2
+Symmetric            3783.1   3787     3275    438.2   1579.0   1765.9  A:3124 B:238 C:188 D:69 E:28 F:123 H:17
 ALL LATTICES          607.1    624      810     36.9    154.4    415.8
 
-== COMBINED + tier-B extrapolation (sample items weighted x10.00; author counts not extrapolated): 3439 effort items (A-F,H); borderline counted: True
+== COMBINED + tier-B extrapolation (sample items weighted x10.00; author counts not extrapolated): 9179 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 533.3    646      935    109.4    229.2    194.6  A:328 B:77 C:135 D:31 E:17 F:49 H:3
 MLWE_structured       651.5   1086     1228     46.2    190.3    415.0  A:508 B:88 C:181 D:137 E:11 F:12 H:8
@@ -75,9 +81,10 @@ SD_code               425.2    483      625     35.3     94.3    295.5  A:185 B:
 Factoring_FFDLP      1026.9   1139     1662    257.1    385.1    384.7  A:710 B:132 C:89 D:52 E:57 F:61 H:3
 Isogeny               112.0    120      228      0.0      2.7    109.3  A:42 B:21 C:45 D:9 E:1 F:2
 Multivariate          196.2    214      272     17.0     74.7    104.5  A:78 B:6 C:99 D:28 F:2 H:1
+Symmetric            5735.4   5750     5583    661.2   2424.1   2650.1  A:4556 B:363 C:347 D:151 E:45 F:264 H:24
 ALL LATTICES         1124.6   1164     1330     73.9    314.4    736.3
 
-== COMBINED vetted + tier-B extrapolation (x10.00): 2179 effort items (A-F,H); borderline counted: True
+== COMBINED vetted + tier-B extrapolation (x10.00): 6172 effort items (A-F,H); borderline counted: True
 class                  frac  touch  authors  pre2006    06-16    17-26  categories
 ECDLP                 299.9    371      574     61.6    133.4    105.0  A:189 B:45 C:69 D:21 E:14 F:33 H:3
 MLWE_structured       448.3    765      877     32.2    123.0    293.1  A:359 B:58 C:135 D:95 E:7 F:8 H:7
@@ -86,6 +93,7 @@ SD_code               306.9    354      467     20.1     63.1    223.7  A:142 B:
 Factoring_FFDLP       478.0    546      757    116.7    194.9    166.5  A:321 B:37 C:71 D:28 E:37 F:34 H:1
 Isogeny                98.6    105      199      0.0      2.7     95.9  A:37 B:18 C:40 D:7 E:1 F:2
 Multivariate          158.1    171      224     12.0     57.4     88.7  A:64 B:2 C:82 D:20 F:2 H:1
+Symmetric            3989.0   3998     3534    453.2   1657.9   1877.9  A:3231 B:247 C:227 D:76 E:29 F:170 H:18
 ALL LATTICES          805.8    831      962     50.9    210.7    544.2
 
 Phase 1 items labeled E or is_record:
@@ -113,24 +121,41 @@ Phase 1 items labeled E or is_record:
   1999  factoring                The number field sieve on many computers
   1999  factoring                Factorization of RSA-140 Using the Number Field Sieve
   2000  factoring                Factorization of a 512-Bit RSA Modulus
+  2000  symmetric                Linear Cryptanalysis of DES
   2001  ffdlp                    Computation of Discrete Logarithms in $$ \mathbb{F}_{2^{607} } $$
   2002  ffdlp                    Improvements to the general number field sieve for discrete logarithms in prime fields. A 
+  2002  symmetric                FPGA's as Cryptanalytic Tools
   2003  multivariate             Algebraic cryptanalysis of HFE using Gröbner bases
   2003  multivariate             Algebraic Cryptanalysis of Hidden Field Equation (HFE) Cryptosystems Using Gröbner Bases
+  2003  symmetric                Efficient Uses of FPGAs for Implementations of DES and Its Experimental Linear Cryptanalys
+  2004  symmetric                Collisions in SHA-0
   2005  factoring                Factorization of RSA-110 using multiple polynomial quadratic sieve
+  2005  symmetric                Collisions of SHA-0 and Reduced SHA-1
+  2007  symmetric                Chosen-Prefix Collisions for MD5 and Colliding X.509 Certificates for Different Identities
+  2007  symmetric                Collisions for 70-Step SHA-1: On the Full Cost of Collision Search
+  2008  symmetric                A Practical Attack on KeeLoq
+  2008  symmetric                Collisions on SHA-0 in One Hour
   2009  factoring                Shor’s Quantum Factoring Algorithm on a Photonic Chip
   2009  sd_generic               FSBday : Implementing Wagner's generalized birthday attack against the SHA-3 round-1 candi
+  2009  symmetric                Practical Collisions for EnRUPT
   2010  factoring                Using a grid platform for solving large sparse linear systems over GF(2)
   2010  multivariate             PWXL: A Parallel Wiedemann-XL Algorithm for Solving Polynomial Equations over GF(2)
+  2010  symmetric                A CellBE-based HPC Application for the Analysis of Vulnerabilities in Cryptographic Hash F
   2011  lattice_generic          Extreme Enumeration on GPU and in Clouds - - How Many Dollars You Need to Break SVP Challe
   2011  ecdlp,factoring          On the Cryptanalysis of Public-Key Cryptography
   2011  ecdlp                    Solving DLP with Auxiliary Input over an Elliptic Curve Used in TinyTate Library
+  2011  symmetric                The potential of reconfigurable hardware for HPC cryptanalysis of SHA-1
+  2011  symmetric                Solving of cryptanalysis problems in grid systems (by the example of BOINC)
+  2011  symmetric                Implementation and performance analysis of Barkan, Biham and Keller's attack on A5/2
   2012  ffdlp                    Breaking Pairing-Based Cryptosystems Using η T Pairing over GF(397)
   2012  multivariate             Solving Quadratic Equations with XL on Parallel Architectures
   2012  ecdlp                    Solving a Discrete Logarithm Problem with Auxiliary Input on a 160-Bit Elliptic Curve
   2012  ecdlp                    Solving a 112-bit prime elliptic curve discrete logarithm problem on game consoles using s
+  2012  symmetric                Practical demonstration of the distinguishing attack against the stream cipher NLSv2
+  2012  symmetric                Building a Collision for 75-Round Reduced SHA-1 Using GPU Clusters
   2013  ffdlp                    An Experiment of Number Field Sieve for Discrete Logarithm Problem over GF(p 12)
   2013  ffdlp                    Solving a 6120 -bit DLP on a Desktop Computer
+  2013  symmetric                On estimating total time to solve SAT in distributed computing environments: Application t
   2014  lattice_generic,lattice_ Parallel Gauss Sieve Algorithm: Solving the SVP Challenge over a 128-Dimensional Ideal Lat
   2014  ffdlp                    COMPUTING DISCRETE LOGARITHMS IN F36·137 USING MAGMA
   2014  ffdlp                    Discrete logarithm in \(\mathrm{GF}(2^{809})\) with FFS
@@ -140,6 +165,9 @@ Phase 1 items labeled E or is_record:
   2015  ecdlp                    Volunteer Computing for Solving an Elliptic Curve Discrete Logarithm Problem
   2015  lattice_generic          An Accelerated Algorithm for Solving SVP Based on Statistical Analysis
   2015  ffdlp                    Computing Discrete Logarithms in $${\mathbb F}_{3^{6 \cdot 137}}$$ and $${\mathbb F}_{3^{6
+  2015  symmetric                Solving weakened cryptanalysis problems for the Bivium cipher in the volunteer computing p
+  2015  symmetric                Efficient Implementations for Practical Linear Cryptanalysis and Its Application to FEAL-8
+  2015  symmetric                Parallel algorithm for MD5 collision attack
   2016  ntru                     Solving NTRU Challenges Using the New Progressive BKZ Library
   2016  ecdlp                    Faster discrete logarithms on FPGAs
   2016  ecdlp                    Web-based Volunteer Computing for Solving the Elliptic Curve Discrete Logarithm Problem
@@ -149,16 +177,21 @@ Phase 1 items labeled E or is_record:
   2017  ecdlp                    Solving 114-Bit ECDLP for a Barreto-Naehrig Curve
   2017  ecdlp                    Scalability of CPU and GPU Solutions of the Prime Elliptic Curve Discrete Logarithm Proble
   2017  ffdlp                    Computing Discrete Logarithms in $${\mathbb F}_{{p}^{6}}$$
+  2017  symmetric                Finding partial hash collisions by brute force parallel programming
   2018  lattice_generic          Analysis of Lattice Reduction Algorithms : Solving SVP Challenges
   2018  lwe_plain,lattice_generi Development of a Dual Version of DeepBKZ and Its Application to Solving the LWE Challenge
   2018  lwe_plain,lattice_generi Hardness Evaluation for Search LWE Problem Using Progressive BKZ Simulator
   2018  ffdlp                    Computing discrete logarithms in cryptographically-interesting characteristic-three finite
+  2018  symmetric                Application of parallel SAT solving algorithms for cryptanalysis of the shrinking and self
   2019  ecdlp,ffdlp              Security analysis of elliptic curves with embedding degree 1 proposed in PLOS ONE 2016
+  2019  symmetric                Brute-Force Cryptanalysis with Aging Hardware: Controlling Half the Output of SHA-256
+  2019  symmetric                Cryptanalysis of a hash function, and the modular subset sum problem
   2020  ffdlp,factoring          A New Angle on Lattice Sieving for the Number Field Sieve
   2020  factoring                Prime factorization algorithm based on parameter optimization of Ising model
   2020  lattice_generic          Massive Parallelization for Finding Shortest Lattice Vectors Based on Ubiquity Generator F
   2020  ffdlp                    Lattice Sieving in Three Dimensions for Discrete Log in Medium Characteristic
   2020  lattice_generic          PBKZ algorithm and its application in lattice challenge
+  2020  symmetric                Optimized Collision Search for STARK-Friendly Hash Challenge Candidates
   2021  ffdlp,other              Cryptanalyses de logarithmes discrets : crible algébrique et réseaux pour canaux auxiliair
   2021  ffdlp                    Analysis and Improvements to the Special Number Field Sieve for Discrete Logarithm Problem
   2021  sd_generic,sd_goppa      Fast GPU Implementation of Dumer's Algorithm Solving the Syndrome Decoding Problem
@@ -171,12 +204,19 @@ Phase 1 items labeled E or is_record:
   2023  factoring                Deciphering a Million-Plus RSA Integer with Ultralow Local Field Coefficient h and Couplin
   2023  ecdlp                    An Attack for a 116bit ECDLP for a Barreto-Naehrig Curve
   2023  ffdlp                    Lattice Enumeration and Automorphisms for Tower NFS: A 521-Bit Discrete Logarithm Computat
+  2023  symmetric                Algebraic cryptanalysis of 9 rounds of lightweight block cipher Simon32/64
   2024  sd_generic               Heuristic Number Geometry Method for Finding Low-Weight Codeword in Linear Block Codes
   2024  ffdlp                    Higher Dimensional Sieving in a Box for Discrete Logarithm in Medium Characteristic Finite
+  2024  symmetric                Inverting Cryptographic Hash Functions via Cube-and-Conquer
+  2024  symmetric                The First Practical Collision for 31-Step SHA-256
+  2024  symmetric                Preimage attack on 44-step MD4 compression function with weakened last step
   2025  factoring                Quantum Integer Factorization by 3 Different Methods, Their Implementations and Results
   2025  lattice_generic,lattice_ Cryptanalysis of public-key cryptography
   2025  lattice_generic          Sieving with Streaming Memory Access
+  2025  symmetric                Analysis of the cryptographic strength of the SHA-256 hash function using the SAT approach
+  2025  symmetric                Preimage attack on 5-round cryptographic hash function JH-256 via parallel SAT solver
   2026  ecdlp                    Solving the Elliptic Curve Discrete Logarithm Problem Using Quantum Tunneling Effects on t
   2026  lattice_generic          Towards Large-Scale Lattice Attack: New Lattice Records by Disk-Based Sieving
   2026  sd_generic               Revisiting ISD Algorithms and New Decoding Records for Large Weight Syndrome Decoding over
   2026  factoring                CUDA-MPQS: A GPU-Resident Self-Initializing Quadratic Sieve, and the Factorization of RSA-
+  2026  symmetric                Practical Preimage Attack on 5-Round Keccak[r=640, c=160]

@@ -3,11 +3,15 @@
 
 Emits data/candidates.jsonl with per-class hit lists. Patterns are
 deliberately broad; precision comes from the classifier stage.
+
+Usage: candidates.py [IN] [OUT] [CLASS]. Without CLASS: the study's public-key
+classes, ignoring symmetric hits. CLASS=symmetric: symmetric candidates only.
 """
 import json, re, sys, collections
 
 IN = sys.argv[1] if len(sys.argv) > 1 else "data/eprint.jsonl"
 OUT = sys.argv[2] if len(sys.argv) > 2 else "data/candidates.jsonl"
+ONLY = sys.argv[3] if len(sys.argv) > 3 else None
 
 # Each class: list of (pattern, label). A record is a candidate for a class
 # if any pattern matches title or abstract (case-insensitive).
@@ -78,6 +82,27 @@ P = {
   (r"(weakness|discrete log).{0,80}\bf_\{?[23]\^|finite field.{0,40}discrete log.{0,40}(record|comput|weak)|quasi-?polynomial.{0,60}discrete log", "ffdlp records"),
   (r"\brainbow\b|unbalanced oil|\buov\b|\bhfe\b|multivariate.{0,60}(attack|cryptanaly|break)|minrank|\bgemss\b", "multivariate"),
  ],
+ # Symmetric class (notes/symmetric_preregistration.md). Technique names are specific to
+ # symmetric cryptanalysis; primitive names count only beside an attack word.
+ "symmetric": [
+  (r"differential cryptanaly|linear cryptanaly|differential[- ]linear|impossible differential|truncated differential|"
+   r"boomerang (attack|distinguish|connectivity)|rectangle attack|integral (attack|distinguish|cryptanaly)|square attack|"
+   r"cube (attack|tester|distinguish)|rebound attack|biclique|slide attack|related[- ]key (attack|differential|boomerang|cryptanaly)|"
+   r"zero[- ]correlation|division propert|correlation attack|guess[- ]and[- ]determine|"
+   r"(differential|linear) (trail|characteristic|hull|propagation)|(mixed[- ]integer|milp|sat)[- ]based.{0,60}(trail|differential|linear|cryptanaly)", "symmetric technique"),
+  (r"(collision|preimage|second[- ]preimage|near[- ]collision|multi[- ]?collision|length[- ]extension|herding) (attack|finding|search|resistance)"
+   r"|(attack|cryptanaly)\w*.{0,60}hash function|hash function.{0,60}(attack|cryptanaly)", "hash attack"),
+  (r"(cryptanaly|attack|distinguish|key[- ]recovery|break|weak key|collision|preimage|forger)\w*.{0,80}"
+   r"\b(aes|rijndael|des|3des|triple[- ]des|blowfish|twofish|serpent|camellia|rc[456]|salsa20?|chacha\d*|trivium|a5/[12]|zuc|kasumi|misty\d?|"
+   r"sha-?[0123]|sha-?(224|256|384|512)|keccak|shake|md[45]|ripemd|blake\d?|skein|gr(o|ø)stl|whirlpool|sm[34]|streebog|kuznyechik|gost|skinny|"
+   r"prince|ascon|xoodoo|xoodyak|gimli|spongent|poseidon|mimc|haraka|even[- ]mansour|feistel|xtea|threefish|shacal|lai[- ]massey|"
+   r"block cipher|stream cipher|tweakable|permutation|sponge|keystream|mac|aead|authenticated encryption|s-?box|(?-i:PRESENT|IDEA|X?TEA|GIFT|SNOW|Grain|Rescue|SIMON|Simon|SPECK|Speck|PRINCE|Midori|KATAN|ARX|Romulus|PHOTON))\b"
+   r"|\b(aes|rijndael|des|3des|serpent|camellia|rc4|salsa20?|chacha\d*|trivium|a5/[12]|zuc|kasumi|sha-?[0123]|sha-?(256|512)|keccak|md[45]|ripemd|blake\d?|"
+   r"skein|whirlpool|sm[34]|gost|skinny|ascon|xoodoo|gimli|poseidon|mimc|even[- ]mansour|feistel|block cipher|stream cipher|"
+   r"tweakable block cipher|keyed permutation|sponge|(?-i:PRESENT|IDEA|X?TEA|GIFT|SNOW|Grain|Rescue|SIMON|Simon|SPECK|Speck|PRINCE|Midori|KATAN|ARX|Romulus|PHOTON))\b.{0,80}(cryptanaly|attack|distinguish|key[- ]recovery|weak key|collision|preimage|forger)", "primitive+attack"),
+  (r"time[- ]memory(-data)? trade[- ]?off|grover.{0,60}(aes|key search|cipher|hash)|(aes|key search|cipher|hash).{0,60}grover|"
+   r"quantum.{0,60}(symmetric|block cipher|even[- ]mansour|feistel|simon'?s algorithm)|simon'?s (algorithm|period)", "generic/quantum symmetric"),
+ ],
 }
 PC = {k: [(re.compile(p, re.I | re.S), lab) for p, lab in v] for k, v in P.items()}
 
@@ -94,9 +119,12 @@ with open(IN) as f, open(OUT, "w") as out:
             labs = [lab for rx, lab in pats if rx.search(text)]
             if labs: hits[cls] = labs
         if not hits: continue
-        # 'dlog generic' alone is too weak to make a candidate
-        if hits.get("ecdlp") == ["dlog generic"] and len(hits) == 1:
-            continue
+        # dlog generic alone is too weak to make an ECDLP candidate; symmetric hits do not rescue it
+        if hits.get("ecdlp") == ["dlog generic"] and set(hits) <= {"ecdlp", "symmetric"}: del hits["ecdlp"]
+        if ONLY:
+            if ONLY not in hits: continue
+        else: hits.pop("symmetric", None)
+        if not hits: continue
         r["kw_hits"] = hits
         r["excl_hints"] = sorted(set(m.group(0).lower() for m in EXCL.finditer(text)))
         out.write(json.dumps(r, ensure_ascii=False) + "\n")

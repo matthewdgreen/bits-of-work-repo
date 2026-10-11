@@ -7,7 +7,8 @@
   "SD_code",
   "Factoring_FFDLP",
   "Isogeny",
-  "Multivariate"
+  "Multivariate",
+  "Symmetric"
  ],
  "fractional": {
   "ecdlp": {
@@ -55,7 +56,10 @@
   "multivariate": {
    "Multivariate": 1.0
   },
-  "other": {}
+  "other": {},
+  "symmetric": {
+   "Symmetric": 1.0
+  }
  },
  "effort_categories": [
   "A",

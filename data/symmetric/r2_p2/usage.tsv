@@ -1,0 +1,8 @@
+batch	model	attempt	prompt_tokens	completion_tokens	cost_usd
+batch_0001	anthropic/claude-opus-5.5	0	34161	9696	0.330564
+batch_0003	anthropic/claude-opus-5.5	0	33654	9674	0.328096
+batch_0006	anthropic/claude-opus-5.5	0	28653	9484	0.304292
+batch_0000	anthropic/claude-opus-5.5	0	32869	10106	0.333596
+batch_0005	anthropic/claude-opus-5.5	0	33157	10424	0.341108
+batch_0002	anthropic/claude-opus-5.5	0	32684	10120	0.333136
+batch_0004	anthropic/claude-opus-5.5	0	32809	10723	0.345696

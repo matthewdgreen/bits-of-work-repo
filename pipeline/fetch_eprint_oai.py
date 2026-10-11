@@ -11,7 +11,7 @@ BASE = "https://eprint.iacr.org/oai"
 OUT = sys.argv[1] if len(sys.argv) > 1 else "data/raw/eprint"
 os.makedirs(OUT, exist_ok=True)
 STATE = os.path.join(OUT, "resume.token")
-UA = "literature-search-pilot/0.1 (academic bibliometrics; contact: matthewdgreen@gmail.com)"
+UA = "bits-of-work-symmetric-extension/0.1 (John Servil; mailto:johnservil@proton.me; https://github.com/johnservil)"
 
 def get(url, tries=6):
     for i in range(tries):

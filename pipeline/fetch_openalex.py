@@ -10,7 +10,7 @@ budget resets instead of failing. If ~/.openalex_key exists (one line) it is
 sent as api_key and never printed.
 
 Usage:
-  fetch_openalex.py phrases  OUTDIR
+  fetch_openalex.py phrases  OUTDIR [CLASS]                 # CLASS: harvest only that class's phrases
   fetch_openalex.py resolve  SEEDS.jsonl OUTDIR   # rows with "seed_id" and "doi" and/or "openalex_id"
   fetch_openalex.py backward OUTDIR               # singleton fetch of every work referenced by the seeds
   fetch_openalex.py forward  OUTDIR [max_citers_per_seed]
@@ -18,8 +18,8 @@ Outputs (JSONL of trimmed work objects): phrase_<cls>_<md5>.jsonl, snow_seeds.js
 snow_backward.jsonl, snow_forward.jsonl; progress in *_done.json files.
 """
 import sys, os, re, json, time, hashlib, urllib.request, urllib.parse, urllib.error
-MAILTO = "matthewdgreen@gmail.com"
-UA = {"User-Agent": f"literature-search-pilot/0.2 (mailto:{MAILTO})"}
+MAILTO = "johnservil@proton.me"
+UA = {"User-Agent": f"bits-of-work-symmetric-extension/0.1 (John Servil; mailto:{MAILTO}; https://github.com/johnservil)"}
 BASE = "https://api.openalex.org/works"
 FIELDS = "id,doi,title,publication_year,publication_date,type,authorships,primary_location,abstract_inverted_index,referenced_works,cited_by_count,ids"
 KEYFILE = os.path.expanduser("~/.openalex_key")
@@ -125,6 +125,13 @@ PHRASES = {
  "comparator": ['"number field sieve"', '"integer factorization" algorithm', '"RSA" factoring record', '"SIDH" attack', '"SIKE" attack',
                 '"supersingular isogeny" attack', '"isogeny" cryptanalysis', '"CSIDH" attack',
                 '"Rainbow" cryptanalysis', '"multivariate" cryptanalysis', '"HFE" attack', '"MinRank"'],
+ # symmetric extension (notes/symmetric_preregistration.md)
+ "symmetric": ['"differential cryptanalysis"', '"linear cryptanalysis"', '"impossible differential"', '"differential-linear"',
+               '"boomerang attack"', '"integral attack"', '"cube attack"', '"division property"', '"rebound attack"',
+               '"related-key attack"', '"slide attack"', '"meet-in-the-middle attack" cipher', '"algebraic attack" cipher',
+               '"correlation attack"', '"guess-and-determine"', '"distinguishing attack"', '"key recovery attack" cipher',
+               '"block cipher" cryptanalysis', '"stream cipher" cryptanalysis', '"hash function" cryptanalysis',
+               '"collision attack" hash', '"preimage attack"', '"time-memory trade-off" attack', '"Grover" "block cipher"'],
 }
 
 def load_ids(path):
@@ -134,7 +141,10 @@ if __name__ == "__main__":
     mode = sys.argv[1]
     if mode == "phrases":
         out = sys.argv[2]; os.makedirs(out, exist_ok=True)
+        only = sys.argv[3] if len(sys.argv) > 3 else None
+        assert only is None or only in PHRASES, f"unknown class {only}"
         for cls, qs in PHRASES.items():
+            if only and cls != only: continue
             for q in qs:
                 fn = qfile(out, cls, q)
                 if os.path.exists(fn): continue

@@ -6,3 +6,6 @@ __pycache__/
 logs/
 # White-paper compilation and visual QA intermediates
 /tmp/pdfs/
+# person-level author tables stay private, as in pipeline/export_public.py
+data/authors/*
+!data/authors/fte_by_year.csv

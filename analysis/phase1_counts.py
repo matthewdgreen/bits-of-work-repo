@@ -14,6 +14,8 @@ Attribution: fractional (pipeline/attribution.json) and touch; plus "all lattice
 (union of MLWE_structured and LWE_plain), the recommended headline (phase0_report §4.2).
 """
 import json, sys, collections, os
+sys.path.insert(0, "pipeline")
+from symmetric_labels import join  # the symmetric extension's labels (notes/symmetric_extension.md)
 EXCL = set(json.load(open('data/manual_exclusions.json'))['items'])
 BORDER = "--borderline" in sys.argv
 POL = json.load(open("pipeline/attribution.json"))
@@ -83,7 +85,16 @@ def table(sel, title, tb_weight=1.0):
                + " ".join(f"{fe[('MLWE_structured',e)] + fe[('LWE_plain',e)]:8.1f}" for e in ("pre-2006", "2006-2016", "2017-2026")))
     return "\n".join(out) + "\n"
 
-R = list(rows())
+def with_symmetric(rows):
+    rows = list(rows); retagged, extra = join({r["_id"]: r for r in rows})
+    for r in extra:
+        srcs = r.get("sources", [])
+        r["_src"] = "eprint" if r["round"] == "eprint" else "phase1"
+        r["_vetted"] = r["_src"] == "eprint" or "dblp" in srcs or "eprint" in srcs
+        r["_id"] = r["id"]
+    return [retagged[r["_id"]] for r in rows] + extra
+
+R = with_symmetric(rows())
 print(f"labeled rows: {len(R)} (ePrint {sum(r['_src']=='eprint' for r in R)}, Phase 1 {sum(r['_src']=='phase1' for r in R)})\n")
 print(table([r for r in R if r["_src"] == "eprint"], "ePrint only (Phase 0 + isogeny supplement)"))
 print(table([r for r in R if r["_src"] == "phase1"], "Phase 1 new items only"))

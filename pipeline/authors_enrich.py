@@ -16,7 +16,7 @@ Input: data/authors/authors.csv (analysis/author_map.py).
 """
 import csv, json, os, re, sys, time, html, urllib.request, urllib.parse, urllib.error
 
-UA = {"User-Agent": "literature-search research (mailto:matthewdgreen@gmail.com)"}
+UA = {"User-Agent": "bits-of-work-symmetric-extension/0.1 (John Servil; mailto:johnservil@proton.me; https://github.com/johnservil)"}
 RAW = "data/raw/enrich"
 WD_OUT = f"{RAW}/wikidata.jsonl"
 ORCID_DIR = f"{RAW}/orcid"
