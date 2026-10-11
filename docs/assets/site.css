@@ -590,3 +590,8 @@ table.gtab .muted { color: var(--ink-3); }
   color: var(--ink-2); text-align: center; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
 ol.bib .meta .qu { font-family: var(--mono); font-size: .92em; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 0 .3rem; opacity: .8; }
 .bib-tools .seg { font-size: .72rem; }
+
+/* GitHub link beside the theme toggle (all pages) */
+.topbar-inner > .gh:hover { text-decoration: none; }
+.topbar-inner > .gh + .icon-btn { margin-left: 0; }
+@media (max-width: 860px) { .topbar-inner > .gh { margin-left: auto; } }
