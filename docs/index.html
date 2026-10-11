@@ -120,6 +120,7 @@
       <div class="fig-title">Papers per year</div>
       <div class="seg" data-ctl="mode"><button data-v="annual" aria-pressed="true">annual</button><button data-v="cumulative">cumulative</button></div>
       <div class="seg" data-ctl="src"><button data-v="all" aria-pressed="true">all sources</button><button data-v="vetted">ePrint / DBLP</button><button data-v="peer">peer-reviewed</button></div>
+      <div class="seg" data-ctl="qf" title="Quantum: items whose main point is a quantum algorithm or quantum resource estimate"><button data-v="all" aria-pressed="true">all</button><button data-v="classical">non-quantum</button><button data-v="quantum">quantum</button></div>
     </div>
     <div class="chart"></div>
     <div class="fig-foot"><button data-table>show data</button><button data-png>save svg</button></div>
@@ -128,7 +129,8 @@
       <em>Peer-reviewed</em> keeps items that also appeared in a refereed journal or conference (theses,
       book chapters and preprint-only items are dropped); venue quality is not assessed. In that view the shaded years (2025&ndash;2026) are likely
       inaccurate: papers take a year or more to appear in a journal or conference, and DBLP indexes them with a further delay.
-      Items without a year or outside the plotted period are omitted from this figure. Click a legend entry to hide a series.</figcaption>
+      <em>Quantum</em> keeps items whose main point is a quantum algorithm or a quantum resource estimate;
+      <em>non-quantum</em> keeps the rest. Items without a year or outside the plotted period are omitted from this figure. Click a legend entry to hide a series.</figcaption>
   </figure>
 
   <div class="thm">

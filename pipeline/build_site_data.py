@@ -49,6 +49,8 @@ def paper_counts():
     peer = peer_reviewed_ids()
     views = ('all', 'vetted') + (('peer',) if peer is not None else ())
     out = {v: {k: [0.0] * (Y1 - Y0 + 1) for k, _ in groups} for v in views}
+    # the same series split by the classifier's quantum flag (quantum algorithms or resource estimates as the main point)
+    out_q = {v: {q: {k: [0.0] * (Y1 - Y0 + 1) for k, _ in groups} for q in ('quantum', 'classical')} for v in views}
     totals = {v: {k: [] for k, _ in groups} for v in out}
     counts = {'export_total': len(rows),
               'included': sum(r['include'] == 'yes' for r in rows),
@@ -62,22 +64,27 @@ def paper_counts():
         y = int(r['year']) if r['year'] else None
         chart_year = y is not None and Y0 <= y <= Y1
         counts['effort_without_chart_year'] += not chart_year
+        q = 'quantum' if r.get('quantum') == 'True' else 'classical'
         for key, cols in groups:
             w = sum(float(r[c] or 0) for c in cols)
             totals['all'][key].append(w)
             if chart_year:
                 out['all'][key][y - Y0] += w
+                out_q['all'][q][key][y - Y0] += w
             if r['vetted'] == 'True':
                 totals['vetted'][key].append(w)
                 if chart_year:
                     out['vetted'][key][y - Y0] += w
+                    out_q['vetted'][q][key][y - Y0] += w
             if peer is not None and r['id'] in peer:
                 totals['peer'][key].append(w)
                 if chart_year:
                     out['peer'][key][y - Y0] += w
+                    out_q['peer'][q][key][y - Y0] += w
     series = {v: {k: [round(x, 2) for x in s] for k, s in d.items()} for v, d in out.items()}
+    series_q = {v: {q: {k: [round(x, 2) for x in s] for k, s in d.items()} for q, d in dq.items()} for v, dq in out_q.items()}
     totals = {v: {k: math.fsum(s) for k, s in d.items()} for v, d in totals.items()}
-    return series, totals, counts
+    return series, series_q, totals, counts
 
 
 def fte():
@@ -207,13 +214,14 @@ def attack_history():
 
 
 def main():
-    paper_series, paper_totals, corpus_counts = paper_counts()
+    paper_series, paper_series_q, paper_totals, corpus_counts = paper_counts()
     data = {
         'generated': datetime.date.today().isoformat(),
         'years': list(range(Y0, Y1 + 1)),
         'classes': [{'key': k, 'label': l} for k, l, *_ in CLASSES],
         'subclasses': [{'key': k, 'label': l} for k, l, _ in SUBCLASSES],
         'papers': paper_series,
+        'papers_q': paper_series_q,
         'paper_totals': paper_totals,
         'corpus_counts': corpus_counts,
         'source_labels': {'all': 'All sources', 'vetted': 'ePrint / DBLP subset', 'peer': 'Peer-reviewed venue'},

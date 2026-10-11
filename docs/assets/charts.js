@@ -244,10 +244,13 @@
     let render;
     const mode = segState(fig, 'mode', 'annual', () => render());
     const src = segState(fig, 'src', 'all', () => render());
+    const qf = segState(fig, 'qf', 'all', () => render());
+    const title = fig.querySelector('.fig-title');
     render = lineChart(fig, {
       aria: 'Line chart of cryptanalytic research items per year by assumption class',
       get() {
-        const P = D.papers[src()], cum = mode() === 'cumulative';
+        const P = qf() === 'all' || !D.papers_q ? D.papers[src()] : D.papers_q[src()][qf()], cum = mode() === 'cumulative';
+        title.textContent = { all: 'Papers per year', quantum: 'Quantum papers per year', classical: 'Non-quantum papers per year' }[qf()];
         const series = CLS.map(c => ({ key: c.key, label: c.label, values: cum ? cumsum(P[c.key]) : movavg(P[c.key]) }));
         let note = null;
         if (cum) {
